@@ -1,6 +1,9 @@
 class BcScrapperController < ApplicationController
   def pf_cheque_especial
-    require 'mechanize'
+    require 'rubygems'
+    #require 'mechanize'
+    gem 'mechanize'
+    
     @msg = Time.now
 
     agent = WWW::Mechanize.new

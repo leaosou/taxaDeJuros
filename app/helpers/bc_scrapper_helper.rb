@@ -1,0 +1,2 @@
+module BcScrapperHelper
+end

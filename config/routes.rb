@@ -1,5 +1,5 @@
-TaxaDeJuros::Application.routes.draw do
-  get "bc_scrapper/pf_cheque_especial"
+TaxaDeJuros::Application.routes.draw do |map|
+  # get "bc_scrapper/pf_cheque_especial"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -50,11 +50,18 @@ TaxaDeJuros::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => "bc_scrapper#pf_cheque_especial"
+  # root :to => "bc_scrapper#pf_cheque_especial"
 
   # See how all your routes lay out with "rake routes"
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
+  
+  map.connect '', :controller => 'bc_scrapper', :action => 'pf_cheque_especial'
+  map.connect 'pf', :controller => 'bc_scrapper', :action => 'pf_cheque_especial' 
+
+  map.connect ':controller/:action/:id'
+  map.connect ':controller/:action/:id.:format'
+  
 end

@@ -6,7 +6,7 @@ class BcScrapperController < ApplicationController
     
     @msg = Time.now
 
-    agent = WWW::Mechanize.new
+    agent = Mechanize.new
 
     url  = "http://www.bcb.gov.br/fis/taxas/htms/tx012010.asp"
     page = agent.get(url)

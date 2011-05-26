@@ -58,9 +58,9 @@ TaxaDeJuros::Application.routes.draw do |map|
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
   
-  map.connect '', :controller => 'bc_scrapper', :action => 'pf_cheque_especial'
+  map.connect '', :controller => 'bc_scrapper', :action => 'proto'
   map.connect 'pf', :controller => 'bc_scrapper', :action => 'pf_cheque_especial' 
-
+  map.connect 'proto', :controller => 'bc_scrapper', :action => 'proto'
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
   

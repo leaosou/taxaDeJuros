@@ -1,7 +1,9 @@
 <html>
   <head>
 	<title>Web scrap</title>
-
+    <META HTTP-EQUIV="Content-Type"
+       CONTENT="text/html; charset=ISO-8859-1"> 
+    </HEAD> 
 	<%=stylesheet_link_tag 'css/flick/jquery-ui-1.8.13.custom','scaffold'%>
 	<%= javascript_include_tag "jquery", "jquery-ui-1.8.13.custom.min", "application" %>
 	<%= javascript_include_tag "protovis-r3.2", "application" %>
@@ -16,13 +18,15 @@
 
   </head>
 <body>
-		Web Scrapping example
+		<H1>Web Scraping example
+		<H3>Scraping "Taxas de juros para opera&ccedil;&otilde;es de cr&eacute;dito com pessoas f&iacute;sicas"
+        <H4>Dados obtidos do site do Banco Central
 		<br>
 		Data: <%= @msg%>!!!
 
 		<ul>
 		<%@vetorInst.each do |item|%>
-		<li>banco: <%=item['instituicao']%> valor: <%=item['valor']%> </li>
+		<li>banco: <%=item['institution']%> valor: <%=item['value']%> </li>
 		<%end%>
 		</ul>
 

@@ -23,7 +23,7 @@ class BcScrapperController < ApplicationController
   
         inst['institution'] = item.children[2].text
         inst['value'] = item.children[3].text
-  
+        inst['abrevName'] = correctBankName(item.children[2].text)
         @vetorInst << inst
       end   
       
@@ -34,38 +34,38 @@ class BcScrapperController < ApplicationController
         |f| f.write(@vetorFlareJS) 
       }
 
-=begin
-      File.new('public/javascripts/flare.js', 'w') do |f|
-        @vetorFlareJS.each do |item|
-          f.write item.txt
-          f.puts
-        end
-      end
-=end
+    end
 
+    private
+    def correctBankName(aString)
+      strigToCorrect = aString
+      strigToCorrect.slice!('BCO DO ')
+      strigToCorrect.slice!('BCO ')
+      strigToCorrect.slice!('BANCO ')
+      strigToCorrect.slice!(' (BRASIL)')     
+      strigToCorrect.slice!(' S.A')
+      strigToCorrect.slice!(' S A')
+      strigToCorrect.slice!(' S.A.')
+      strigToCorrect.slice!(' SA')
+      strigToCorrect.slice!(' S.A')
+      
+      #substitute double spaces by single space
+      strigToCorrect.squeeze!(" ")
+      #substitute spaces by underscore
+      strigToCorrect.gsub!(" ","_")
+      
+      #remove EST_DO_  and  EST_DE_  DA_  LA_
+      strigToCorrect.slice!('EST_DO_') 
+      strigToCorrect.slice!('EST_DE_') 
+      strigToCorrect.slice!('DA_') 
+      strigToCorrect.slice!('LA_')
+      #remove dot, if any, at the string's end
+      if (strigToCorrect[-1,1] == '.') then
+        strigToCorrect = strigToCorrect[0, strigToCorrect.length-1]
+      end
+      return strigToCorrect
     end
     
-    #private
-    def correctBankName(aString)
-      aString.slice!('BCO DO ')
-      aString.slice!('BCO ')
-      aString.slice!('BANCO ')
-      aString.slice!(' (BRASIL)')
-      aString.slice!(' S.A')
-      aString.slice!(' S A')
-      aString.slice!(' S.A.')
-      aString.slice!(' SA')
-      aString.slice!(' S.A')
-      
-      #substitute spaces by underscore
-      aString.gsub!(" ","_")
-      #remove dot, if any, at the string's end
-      if (aString[-1,1] == '.') then
-        aString = aString[0, aString.length-1]
-      end
-      return aString
-    end
-
     private
     def correctValue(aString)
       #Remove decimal comma & Multiply by 10000
@@ -111,8 +111,8 @@ class BcScrapperController < ApplicationController
                "    maior: {\n"
             end
           end
-          @vetorFlareJS << '        ' + correctBankName(inst['institution']) +
-                          ': ' + correctValue(inst['value'])
+          @vetorFlareJS << '        ' + inst['abrevName'] +
+                          ': ' + correctValue(inst['value']) + "\n"
           countLine+=1
         end
     
@@ -120,7 +120,7 @@ class BcScrapperController < ApplicationController
         @vetorFlareJS <<
               "    }\n" +
               "  }\n\n" +
-              "};"
+              "};\n"
     end
 
 

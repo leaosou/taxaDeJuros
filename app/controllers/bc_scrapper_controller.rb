@@ -30,7 +30,8 @@ class BcScrapperController < ApplicationController
       #generate the flare.js into the array
       @vetorFlareJS = generateFlareJavaScript   
       
-      File.open('public/javascripts/flare.js', 'w') {
+      #File.open('public/javascripts/flare.js', 'w') {
+      File.open("#{RAILS_ROOT}/tmp/flare-#{Process.pid}.js", 'w') {
         |f| f.write(@vetorFlareJS) 
       }
 
